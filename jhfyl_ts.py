@@ -39,7 +39,7 @@ def img_to_str(image_path):
 
     finally:
         if 'words_result' in result:
-            return '\n'.join([w['words'] for w in result['words_result']])
+            return ' '.join([w['words'] for w in result['words_result']])
         else:
             return result
 
@@ -63,7 +63,13 @@ def isfight(words):
     if words is None:
         return False
     else:
-        return words.find("江秋萍") >= 0
+        result = False
+        try:
+            result = words.find("江秋萍") >= 0
+        except Exception as e:
+            print("words 不是 string")
+        finally:
+            return result
 
 def overfight(words):
 
@@ -71,7 +77,14 @@ def overfight(words):
 
         return False
     else:
-        return words.find("关闭") >= 0
+        result = False
+        try:
+            result = words.find("关闭") >= 0
+        except Exception as e:
+            print("words 不是 string")
+        finally:
+            return result
+
 
 def touchfightover():
     command = 'adb shell input tap 560 1567'
@@ -125,22 +138,34 @@ def autoJB():
 
              flag = 1
 
+        time.sleep(2.5)
+
         screencap()
         words = img_to_str(imagepath)
+        print(type(words))
+        print('1 \n')
 
         if isfight(words):
-            time.sleep(18)
+            time.sleep(10
+
+
+
+
+
+                       )
             cleanpng()
             screencap()
             nwords = img_to_str(imagepath)
+            print(type(nwords))
+            print('2 \n')
             if overfight(nwords):
                 touchfightover()
-                time.sleep(5)
+                time.sleep(3)
             continue
 
         if overfight(words):
             touchfightover()
-            time.sleep(5)
+            time.sleep(3)
             continue
 
 
